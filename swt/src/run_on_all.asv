@@ -1,0 +1,14 @@
+load image_list.mat
+
+source_dir = '../../svt/svt1/img/';
+results_dir = 'results_first_run/';
+
+rmdir(results_dir, 's');
+
+for i=1:size(image_list, 1)
+    source_file = [source_dir image_list{i}];
+    result_file = [results_dir 'result' image_list{i}];
+    result = detecttext(source_file);
+    imwrite(result, result_file, 'jpg');
+    
+end

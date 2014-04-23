@@ -1,0 +1,11 @@
+source_dir = '../../svt/svt1/img/';
+results_dir = 'results/';
+list = {'00_08.jpg' 
+        '00_09.jpg'};
+for i=1:size(list, 2)
+    source_file = [source_dir list{i}];
+    result_file = [results_dir 'result' list{i}];
+    result = detecttext(source_file);
+    imwrite(result, result_file, 'jpg');
+    
+end

@@ -4,8 +4,8 @@ function [ letters ] = extractletters( swtMap, swtLabel, ccNum )
 
 numLetters = 0;
 letters = zeros(size(swtLabel));
-maxLetterHeight = 300;
-minLetterHeight = 10;
+maxLetterHeight = 400;
+minLetterHeight = 5;
 
 for i=1:ccNum
     
@@ -26,7 +26,7 @@ for i=1:ccNum
     
     % Reject CC with hight stroke width variance.  The threshold if half
     % the average stroke width of a connected component
-    if varianceSW/meanSW > .5, continue, end
+    if varianceSW/meanSW > .7, continue, end
     
     % Ratio between the diameter of the connected component and its
     % median stroke width to be a value less than 10

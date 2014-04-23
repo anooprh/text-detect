@@ -12,21 +12,30 @@ function [ swtMap ] = swt( im, searchDirection )
 
 % Convert image to gray scale
 im = im2double(rgb2gray(im));
-%figure, imshow(im), title('Black and White Image');
+% figure, imshow(im), title('Black and White Image');
 
 % Find edges using canny edge dector
 edgeMap = edge(im, 'canny');
-%figure, imshow(edgeMap), title('Edges Using Canny');
+% figure, imshow(edgeMap), title('Edges Using Canny');
 
 % Get all edge pixel postitions
 [edgePointRows, edgePointCols] = find(edgeMap);
 
+% figure, imshow(im), title('Black and White Image With Edge Points Marked');
+% hold on
+% plot(edgePointCols,edgePointRows, 'r.')
+
+
 % Find gradient horizontal and vertical gradient
 sobelMask = fspecial('sobel');
+% sobelMask = [3  10  3;
+%              0  0   0
+%              -3 -10 -3];
 dx = imfilter(im,sobelMask);
 dy = imfilter(im,sobelMask');
-%figure, imshow(dx, []), title('Horizontal Gradient Image');
-%figure, imshow(dy, []), title('Vertical Gradient Image');
+% [dx, dy] = gradient(im);
+% figure, imshow(dx, []), title('Horizontal Gradient Image');
+% figure, imshow(dy, []), title('Vertical Gradient Image');
 
 % Initializing matrix of gradient direction
 theta = zeros(size(edgeMap,1),size(edgeMap,2));
@@ -41,6 +50,7 @@ for i=1:size(edgeMap,1)
         end
     end
 end
+% figure, imshow(theta), title('Theta. .');
 
 % Getting size of the image
 [m,n] = size(edgeMap);
@@ -130,7 +140,7 @@ for i=1:size(edgePointRows)
     end
 end
 
-%figure, imshow(swtMap, []), title('Stroke Width Transform: First Pass');
+% figure, imshow(swtMap, []), title('Stroke Width Transform: First Pass');
 
 % Iterate through all stoke points for a refinement pass.  Refer to figure
 % 4b in the paper.
@@ -191,7 +201,7 @@ for i=1:sizeOfStrokePoints
     
 end
 
-%figure, imshow(swtMap, []), title('Stroke Width Transform: Second Pass');
+% figure, imshow(swtMap, []), title('Stroke Width Transform: Second Pass');
 
 end
 
